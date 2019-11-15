@@ -1,7 +1,6 @@
 package com.company;
 
-import javax.print.DocFlavor;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.util.Scanner.*;
@@ -9,61 +8,69 @@ import static java.util.Scanner.*;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner userinput = new Scanner(System.in);// scanner to get users input
-        System.out.println("Good morning, How are you feeling today?");
-        String answer = userinput.nextLine();// getting the user input from the scanner class and saving it into answer variable
+        Scanner input = new Scanner(System.in);// scanner to get users input
 
-        //Creating an array of User input
-
-        String[] answerarray = new String[100];
+        //System.out.println("Good morning, How are you feeling today?");
+        //String answer = userinput.nextLine();// getting the user input from the scanner class and saving it into answer variable
 
 
-        for (int j = 0; j < answerarray.length; j++)
-            answerarray[j] = userinput.nextLine();
-
+        String feeling, returnRaven;
+        boolean quit = true;
+        ArrayList<String> ravensResponse = new ArrayList<String>();
 
         String[] positivearray = new String[]{"good", "glad", "happy", "relaxed", "accomplished", "alert", "creative"};
 
         String[] negativearray = new String[]{"bad", "sad", "tired", "angry", "anxious", "hungry", "moody", "afraid"};
 
-//public static void  equal(){
+        //Creating a varialble called start phrase
 
+        String startphrase = "Good Morning, How are you feeling today? Press Q to Quit";// creating variable for  Ravens response
 
-        for (int i = 0; i < positivearray.length; i++) {
-            for (int j = 0; j < answerarray.length; j++) {// inner loop
+        System.out.println(startphrase);
 
-                if (positivearray[i] == answerarray[j]) {
+        while (quit) {
 
-                    System.out.println("I am so happy for you...Yay");
-                } else {
+            feeling = input.nextLine();
+            if (feeling.equalsIgnoreCase("Q")) {
+                quit = false;
 
-                    for (int k = 0; k < negativearray.length; i++) {
+                System.out.println("returnRaven");
+//creating a variable for return Raven
+                returnRaven = ravensResponse(feeling, positivearray, negativearray);
+                ravensResponse.add("User: " + feeling);
+                ravensResponse.add("Raven: " + returnRaven);
 
-                        if (negativearray[k] == answerarray[j]) ;
-
-
-                        System.out.println("Really!Why, tell me more");
-
-                    }else{
-
-
-                        System.out.println("Meh");
-
-                        System.out.println("tell me more");
-
-
-                    }
-                }
             }
         }
+
+        for (String x : ravensResponse) {
+            System.out.println(x);
+        }
+    }
+    //creating a method
+
+    public static String ravensResponse(String feeling, String[] positivearray, String[] negativearray) {
+        int counterpos = 0;
+        int counterneg = 0;
+
+        for (int i = 0; i < positivearray.length; i++) {
+            if (feeling.contains(positivearray[i])) {
+                counterpos++;
+            }
+            if (feeling.contains(negativearray[i])) {
+                counterneg++;
+            }
+
+        }
+
+        if (counterpos > counterneg) {
+            return "I am happy for you";
+        } else if (counterneg > counterpos) {
+            return "I am sorry";
+        } else {
+            return "Meh";
+        }
+
+
     }
 }
-
-
-
-
-
-
-
-
-
